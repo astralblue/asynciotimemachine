@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Top-level package for asyncio Time Machine."""
+"""Main module."""
 
 __author__ = """Eugene M. Kim"""
 __email__ = 'astralblue@gmail.com'
