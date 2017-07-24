@@ -25,11 +25,11 @@ event loop's time reference to the specified timestamp::
     >>> isclose(event_loop.time() - original_time(), 20.0, abs_tol=0.001)
     True
 
-Since `~asyncio.AbstractEventLoop.time()` is the authoritative timestamp source
-for all operations of the loop, fast-forwarding the timestamp at the right place
-can eliminate the real-time delay.  For example, the `hello_world()` function in
-the following example runs immediately, despite being scheduled 30 seconds from
-now::
+Since the :py:meth:`asyncio.BaseEventLoop.time` method is the authoritative
+timestamp source for all operations of the loop, fast-forwarding the timestamp
+at the right place can eliminate the real-time delay.  For example, the
+`hello_world()` function in the following example runs immediately, despite
+being scheduled 30 seconds from now::
 
     >>> def hello_world():
     ...     print("Hello world")
