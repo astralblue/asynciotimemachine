@@ -20,7 +20,19 @@ deploy:
   distributions: sdist bdist_wheel
   user: astralblue
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: !!binary |
+      ZFpkdnhnYUIyLzF4RzVjYWlBUkhHMTRIVGZFaWdxRDlKRjk1K2huVkYyYi9Xb1g4YUhXMWZwNW5G
+      eFhMblBvREFuS3UxbFFLOS83Qjk5aXJ3ZHVqcDlUVWI0a0taQmZOQmhlWkFZcittRXc0ZnpHV3FH
+      UTFqNndHdHpyWWJHaDZMQ0Y2eEdXVHBIVGRIQ1RDOHRFRHNMQkI0SGN1VWRIcEpHdkdERVNBVHVD
+      enpjUDljSFRVYTVhVVIwR3p5UVVSWkwxTm0yNmcwWUYvZXovWVNMYjUzZmNsZHNMUThMU2hzNitC
+      VXIvT3BjQ20xM2xJVGhmbjYzVVJhY0xJdmkwanVRdjFtTkFxWVVYbnZqVVpYQ3Y5dDZhS3JSLzFZ
+      MVR5akNnZHhXTEJ4OXJ2eVlJVjF4NmNKc09vdUlhbmExOERHQmgxaEpvRm5VM0g2Vm9oWlNUMzVU
+      ZFg1K21oZVFIV2dsQUwySTlEeUtOWjlRN1drbUtpbCtIYkt6dVcwdzgraHZtZHdjRFRqMXROUi9w
+      dncrRmdRRTBHSlA5YnhZZDhPTFZsemZkUFVsL3FiTDRsc3cyelhUdjRQZkJRdGV6SFpWNnJCOVl0
+      S1Z5YXc3amt3dlZRMk9IU3RlMFNjYk5KQzlzOVh2RzFoR3hGKzRSbUIza2Q5b3Nrbml1MkMxOWwr
+      RjN2VzRQNnk5Z2tiKzF3VG14ZFVrMGVTYUUySDlOODFOd2RJWS9kQXhWeVVpZHAzZDBKbTFzTkE0
+      K0h1UnVHdUpVek9kc3Y4aFR1V0M2cklab0NESTF2OUZocVVUeHRTZytPdTRnK3I0MXcwanhHTnIz
+      aThkYWZEek9CQ0t5d0dVYnZiMks4WENlaUZwb1hkdEROV0Y3TVlsaTc2aDBaZDh5eERYTEk1dGs9
   on:
     tags: true
     repo: astralblue/asynciotimemachine
