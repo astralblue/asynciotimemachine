@@ -25,10 +25,7 @@ Monkey-patches asyncio.AbstractEventLoop so as to make it think it lives in the 
 * Documentation: https://asynciotimemachine.readthedocs.io.
 
 
-Features
---------
-
-* TODO
+.. include:: usage.rst
 
 Credits
 ---------
