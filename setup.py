@@ -12,23 +12,21 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    # TODO: put package requirements here
 ]
 
 setup_requirements = [
     'pytest-runner',
-    # TODO(astralblue): put setup requirements (distutils extensions, etc.) here
 ]
 
 test_requirements = [
     'pytest',
-    # TODO: put package test requirements here
 ]
 
 setup(
     name='asynciotimemachine',
     version='0.1.0',
-    description="Monkey-patches asyncio.AbstractEventLoop so as to make it think it lives in the future.",
+    description="Monkey-patches asyncio.AbstractEventLoop so as to make it "
+                "think it lives in the future.",
     long_description=readme + '\n\n' + history,
     author="Eugene M. Kim",
     author_email='astralblue@gmail.com',
