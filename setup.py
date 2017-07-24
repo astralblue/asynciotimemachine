@@ -3,7 +3,7 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -31,8 +31,7 @@ setup(
     author="Eugene M. Kim",
     author_email='astralblue@gmail.com',
     url='https://github.com/astralblue/asynciotimemachine',
-    packages=find_packages(include=['asynciotimemachine']),
-    include_package_data=True,
+    py_modules=['asynciotimemachine'],
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,
