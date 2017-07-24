@@ -32,7 +32,11 @@ import asynciotimemachine
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+        'sphinx.ext.autodoc',
+        'sphinx.ext.viewcode',
+        'sphinx.ext.intersphinx',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -160,4 +164,8 @@ texinfo_documents = [
 ]
 
 
+# -- Options for intersphinx -------------------------------------------
 
+intersphinx_mapping = {
+        'python': ('https://docs.python.org/3.4', None),
+}
