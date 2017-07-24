@@ -172,3 +172,32 @@ texinfo_documents = [
 intersphinx_mapping = {
         'python': ('https://docs.python.org/3.4', None),
 }
+
+
+# -- Hook for API documentation by RTD ---------------------------------
+
+def rm_f(pathname):
+    print("removing", pathname, "...", file=sys.stderr, end=" ")
+    try:
+        os.unlink(pathname)
+    except OSError as e:
+        print(os.strerror(e.errno), file=sys.stderr)
+        import errno
+        if e.errno != errno.ENOENT:
+            raise
+    else:
+        print("OK", file=sys.stderr)
+
+def run_apidoc(_):
+    docs_dir = os.path.abspath(os.path.dirname(__file__))
+    root_dir = os.path.abspath(os.path.join(docs_dir, '..'))
+    for basename in ('asynciotimemachine', 'modules'):
+        rm_f(os.path.join(docs_dir, os.path.extsep.join([basename, 'rst'])))
+    args = ['sphinx-apidoc', '-o', docs_dir, root_dir]
+    args.extend(os.path.join(root_dir, name)
+                for name in ('setup.py', 'travis_pypi_setup.py', 'tests'))
+    from sphinx.apidoc import main
+    main(args)
+
+def setup(app):
+    app.connect('builder-inited', run_apidoc)
