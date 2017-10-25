@@ -6,7 +6,7 @@ flake8==3.5.0
 flake8_docstrings==1.1.0
 tox==2.9.1
 coverage==4.4.1
-Sphinx==1.6.2
+Sphinx==1.6.5
 cryptography==1.7
 PyYAML==3.11
 pytest==3.1.3
