@@ -24,7 +24,7 @@ test_requirements = [
 
 setup(
     name='asynciotimemachine',
-    version='0.2.0',
+    version='0.3.0',
     description="Monkey-patches asyncio.AbstractEventLoop so as to make it "
                 "think it lives in the future.",
     long_description=readme + '\n\n' + history,

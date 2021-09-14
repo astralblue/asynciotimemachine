@@ -8,7 +8,7 @@ from typing import Optional
 
 __author__ = """Eugene M. Kim"""
 __email__ = 'astralblue@gmail.com'
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 
 class TimeMachine:
