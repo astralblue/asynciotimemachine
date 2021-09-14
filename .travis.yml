@@ -4,6 +4,7 @@
 os: linux
 virt: lxd
 arch: arm64-graviton2
+dist: focal
 
 language: python
 python:
