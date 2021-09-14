@@ -1,6 +1,10 @@
 # Config file for automatic testing at travis-ci.org
 # This file will be regenerated if you run travis_pypi_setup.py
 
+os: linux
+virt: lxd
+arch: arm64-graviton2
+
 language: python
 python:
   - 3.9
