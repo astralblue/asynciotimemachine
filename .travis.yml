@@ -43,4 +43,4 @@ deploy:
   on:
     tags: true
     repo: astralblue/asynciotimemachine
-    python: 3.4
+    python: 3.6
