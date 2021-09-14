@@ -2,7 +2,7 @@
 History
 =======
 
-0.2.1 (2021-09-14)
+0.3.0 (2021-09-14)
 ------------------
 
 * Support use as a context manager, to restore the time method at exit.
