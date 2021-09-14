@@ -3,7 +3,7 @@
 
 """Tests for `asynciotimemachine` package."""
 
-from asyncio import new_event_loop
+from asyncio import get_event_loop, new_event_loop
 
 import pytest
 
@@ -53,3 +53,13 @@ class TestTimeMachine:
         """Test ``advance_to()`` raises `ValueError` for travel into past."""
         with pytest.raises(ValueError):
             time_machine.advance_to(event_loop.time() + amount)
+
+    def test_as_context_manager(self, event_loop):
+        original_time = event_loop.time
+        with TimeMachine(event_loop=event_loop) as tm:
+            assert event_loop.time != original_time
+            assert event_loop.time == tm._TimeMachine__time
+        assert event_loop.time == original_time
+
+    def test_with_default_loop(self):
+        self.test_as_context_manager(event_loop=get_event_loop())
