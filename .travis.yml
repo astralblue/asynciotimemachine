@@ -5,6 +5,7 @@ os: linux
 virt: lxd
 arch: arm64-graviton2
 dist: focal
+group: edge
 
 language: python
 python:
