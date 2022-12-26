@@ -1,7 +1,7 @@
 pip==21.2.4
 virtualenv==20.7.2
 bump2version==1.0.1
-wheel==0.37.0
+wheel==0.38.1
 watchdog==2.1.5
 flake8==3.9.2
 flake8_docstrings==1.6.0
