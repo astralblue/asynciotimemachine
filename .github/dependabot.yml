@@ -1,0 +1,46 @@
+# Dependabot configuration.  This file supersedes any Dependabot settings
+# configured through the GitHub UI, which previously watched the (now deleted)
+# requirements_dev.txt.
+# https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+version: 2
+
+updates:
+  # pyproject.toml [dependency-groups] plus the committed uv.lock.  The package
+  # has no runtime dependencies, so everything in the lock is dev tooling: one
+  # catch-all group keeps this to a single PR per week rather than the
+  # per-pin PR storm requirements_dev.txt produced.
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "build(deps)"
+    groups:
+      python-tooling:
+        patterns:
+          - "*"
+
+  # Actions referenced from .github/workflows/*.yml.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
