@@ -69,7 +69,7 @@ release = asynciotimemachine.__version__
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -170,7 +170,7 @@ texinfo_documents = [
 # -- Options for intersphinx -------------------------------------------
 
 intersphinx_mapping = {
-        'python': ('https://docs.python.org/3.6', None),
+        'python': ('https://docs.python.org/3', None),
 }
 
 
@@ -193,10 +193,10 @@ def run_apidoc(_):
     root_dir = os.path.abspath(os.path.join(docs_dir, '..'))
     for basename in ('asynciotimemachine', 'modules'):
         rm_f(os.path.join(docs_dir, os.path.extsep.join([basename, 'rst'])))
-    args = ['sphinx-apidoc', '-o', docs_dir, root_dir]
+    args = ['-o', docs_dir, root_dir]
     args.extend(os.path.join(root_dir, name)
-                for name in ('setup.py', 'travis_pypi_setup.py', 'tests'))
-    from sphinx.apidoc import main
+                for name in ('tests', '.venv', '.venvs'))
+    from sphinx.ext.apidoc import main
     main(args)
 
 def setup(app):

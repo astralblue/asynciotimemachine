@@ -64,11 +64,15 @@ Ready to contribute? Here's how to set up `asynciotimemachine` for local develop
 
     $ git clone git@github.com:your_name_here/asynciotimemachine.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Install `uv <https://docs.astral.sh/uv/>`_ if you don't have it, then create
+   the development environment from the committed lockfile::
 
-    $ mkvirtualenv asynciotimemachine
     $ cd asynciotimemachine/
-    $ python setup.py develop
+    $ uv sync
+
+   This creates ``.venv/`` with ``asynciotimemachine`` installed in editable
+   mode alongside the ``dev`` dependency group.  You do not need to activate
+   it: prefix commands with ``uv run``.
 
 4. Create a branch for local development::
 
@@ -76,13 +80,27 @@ Ready to contribute? Here's how to set up `asynciotimemachine` for local develop
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass the linter and
+   the tests::
 
-    $ flake8 asynciotimemachine tests
-    $ python setup.py test or py.test
-    $ tox
+    $ uv run ruff check .
+    $ uv run ruff format --check .
+    $ uv run pytest
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+   ``uv run ruff check --fix .`` and ``uv run ruff format .`` apply what those
+   first two report.
+
+   To run the tests against another supported interpreter, name it: ``uv``
+   downloads one on demand, so this works on a machine with a single Python
+   installed::
+
+    $ uv run --python 3.14 pytest
+
+   If you changed ``[project]`` or ``[dependency-groups]`` in
+   ``pyproject.toml``, regenerate the lockfile and commit it with your
+   change; CI runs ``uv lock --check`` and fails on a stale one::
+
+    $ uv lock
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -101,14 +119,38 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.6, 3.7, 3.8, and 3.9. Check
-   https://travis-ci.org/astralblue/asynciotimemachine/pull_requests
-   and make sure that the tests pass for all supported Python versions.
+3. The pull request should work for Python 3.10, 3.11, 3.12, 3.13, and 3.14.
+   Check
+   https://github.com/astralblue/asynciotimemachine/actions/workflows/test.yml
+   and make sure that the checks pass for all supported Python versions.
 
 Tips
 ----
 
 To run a subset of tests::
 
-$ py.test tests.test_asynciotimemachine
+    $ uv run pytest tests/test_asynciotimemachine.py::TestTimeMachine::test_advance_by
+    $ uv run pytest -k advance_to
+
+Other common tasks::
+
+    $ uv run coverage run -m pytest && uv run coverage report -m
+    $ uv run --group docs sphinx-build -b html docs docs/_build/html
+    $ uv run --group docs sphinx-autobuild docs docs/_build/html
+    $ uv build
+
+Deploying
+---------
+
+A reminder for the maintainers on how to deploy.  Make sure all your changes
+are committed, including an entry in ``HISTORY.rst``.  Then::
+
+    $ uv run bump-my-version bump minor   # or patch / major
+    $ git push --follow-tags
+
+``bump-my-version`` rewrites ``__version__`` in ``asynciotimemachine.py``,
+commits, and creates a ``vX.Y.Z`` tag.  Pushing that tag triggers
+``.github/workflows/release.yml``, which re-runs the test matrix, builds the
+sdist and wheel with ``uv build``, and uploads them to PyPI using Trusted
+Publishing -- there is no PyPI credential stored in this repository.
 

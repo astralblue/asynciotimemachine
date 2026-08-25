@@ -2,6 +2,18 @@
 History
 =======
 
+0.4.0 (2026-08-25)
+------------------
+
+* Resolve the default event loop explicitly: prefer the running loop, fall
+  back to the thread's current loop, and raise a `RuntimeError` telling the
+  caller to pass ``event_loop=`` when there is neither.  ``TimeMachine()``
+  with no argument used to call `asyncio.get_event_loop()`, which raises on
+  Python 3.14 and has warned since 3.12.
+* Drop support for Python 3.6 through 3.9; support 3.10 through 3.14.
+* Move packaging to ``pyproject.toml`` built by ``flit_core``, and CI from
+  the long-defunct travis-ci.org to GitHub Actions.
+
 0.3.0 (2021-09-14)
 ------------------
 
