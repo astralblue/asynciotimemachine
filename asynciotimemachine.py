@@ -4,7 +4,7 @@ import asyncio
 
 __author__ = "Eugene M. Kim"
 __email__ = "astralblue@gmail.com"
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 
 class TimeMachine:
