@@ -1,0 +1,143 @@
+[build-system]
+requires = ["flit_core >=3.11,<5"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "asynciotimemachine"
+description = "Monkey-patches asyncio.AbstractEventLoop so as to make it think it lives in the future."
+readme = "README.rst"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Eugene M. Kim", email = "astralblue@gmail.com" },
+]
+keywords = [
+    "asyncio",
+    "event-loop",
+    "clock",
+    "time",
+    "testing",
+    "mocking",
+    "monkey-patching",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = []
+# Read from __version__ in asynciotimemachine.py, which is also what
+# docs/conf.py imports and what bump-my-version rewrites.
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/astralblue/asynciotimemachine"
+Documentation = "https://asynciotimemachine.readthedocs.io"
+Changelog = "https://github.com/astralblue/asynciotimemachine/blob/master/HISTORY.rst"
+Issues = "https://github.com/astralblue/asynciotimemachine/issues"
+
+# --- build backend ---------------------------------------------------------
+
+# No [tool.flit.module] table: flit derives the module name from the project
+# name, and asynciotimemachine.py at the root already matches.
+
+[tool.flit.sdist]
+# Mandatory, not decorative: under a PEP 517 frontend flit_core never consults
+# version control, so without this the sdist would be just the module,
+# pyproject.toml, README.rst and LICENSE.  This list is what MANIFEST.in used
+# to ship.  __pycache__ and *.pyc are excluded automatically whenever this
+# table is present.
+include = [
+    "AUTHORS.rst",
+    "CONTRIBUTING.rst",
+    "HISTORY.rst",
+    "docs/",
+    "tests/",
+]
+exclude = [
+    "**/.DS_Store",
+    "docs/_build/",
+    # sphinx-apidoc output, regenerated on every docs build.
+    "docs/asynciotimemachine.rst",
+    "docs/asynciotimemachine.*.rst",
+    "docs/modules.rst",
+]
+
+# --- development dependencies ----------------------------------------------
+
+# Versions are floors, not pins: uv.lock is what makes an environment
+# reproducible, and pinning here is what made Dependabot open a PR per patch
+# release of every dev tool.
+[dependency-groups]
+test = ["pytest>=8", "coverage[toml]>=7"]
+lint = ["ruff>=0.16"]
+docs = ["sphinx>=8", "sphinx-autobuild>=2024"]
+release = ["bump-my-version>=1.5"]
+dev = [
+    { include-group = "test" },
+    { include-group = "lint" },
+    { include-group = "docs" },
+    { include-group = "release" },
+]
+
+# --- tooling ---------------------------------------------------------------
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+
+[tool.coverage.run]
+source = ["asynciotimemachine"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.ruff]
+line-length = 79
+target-version = "py310"
+extend-exclude = ["docs"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors    \
+    "W",   # pycodestyle warnings   |  what flake8 checked
+    "F",   # pyflakes              /
+    "D",   # pydocstyle (flake8-docstrings)
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+]
+
+[tool.ruff.lint.pydocstyle]
+# The house docstring style is Sphinx :param:/:raise: fields; the google and
+# numpy conventions would flag every one of them.
+convention = "pep257"
+
+[tool.ruff.lint.isort]
+known-first-party = ["asynciotimemachine"]
+
+[tool.bumpversion]
+current_version = "0.3.0"
+commit = true
+tag = true
+# Spelled out because .github/workflows/release.yml keys off the tag name:
+# changing this means changing the workflow's `tags:` filter too.
+tag_name = "v{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "asynciotimemachine.py"
+search = '__version__ = "{current_version}"'
+replace = '__version__ = "{new_version}"'
