@@ -11,7 +11,8 @@ specified timestamp respectively::
     >>> import asyncio
     >>> import math
     >>> from asynciotimemachine import TimeMachine
-    >>> event_loop = asyncio.get_event_loop()
+    >>> event_loop = asyncio.new_event_loop()
+    >>> asyncio.set_event_loop(event_loop)
     >>> original_time = event_loop.time
     >>> with TimeMachine() as tm:
     ...     tm.advance_by(10.0)
@@ -20,6 +21,15 @@ specified timestamp respectively::
     ...     tm.advance_to(original_time() + 20.0)
     ...     assert math.isclose(event_loop.time() - original_time(), 20.0,
     ...                         abs_tol=0.001)
+    >>> asyncio.set_event_loop(None)
+    >>> event_loop.close()
+
+Without an explicit *event_loop* argument, `~asynciotimemachine.TimeMachine`
+uses the running event loop if there is one, and otherwise the current event
+loop of the calling thread—the one most recently passed to
+:py:func:`asyncio.set_event_loop`.  If there is neither, it raises
+:py:exc:`RuntimeError`; note that :py:func:`asyncio.get_event_loop` no longer
+creates an event loop on demand as of Python 3.14.
 
 Since the :py:meth:`asyncio.BaseEventLoop.time` method is the authoritative
 timestamp source for all operations of the loop, fast-forwarding the timestamp
