@@ -26,7 +26,15 @@ uv run --group docs sphinx-autobuild docs docs/_build/html
 uv build                # sdist + wheel via flit_core
 uv lock                 # re-resolve after editing pyproject.toml; CI runs
                         # `uv lock --check` and fails on a stale lockfile
+uv audit --frozen --preview-features audit-command   # known vulnerabilities
 ```
+
+Vulnerability scanning is deliberately *not* part of the PR gate: it runs
+weekly from `.github/workflows/audit.yml`, because every locked package is dev
+tooling (zero runtime dependencies) and a fresh advisory should not redden an
+unrelated pull request. GitHub's dependency graph does not currently parse
+`uv.lock`, so Dependabot alerts cover the workflows' actions but not Python —
+`uv audit` is what covers Python.
 
 There is no Makefile and no tox: the version matrix lives in
 `.github/workflows/test.yml`, and `uv run --python X.Y` covers it locally.

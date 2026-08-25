@@ -1,0 +1,40 @@
+name: audit
+
+# Weekly rather than part of the PR gate: this package has zero runtime
+# dependencies, so everything in uv.lock is dev tooling that never reaches
+# anyone who installs asynciotimemachine.  A newly published advisory against
+# Sphinx or pytest is worth knowing about, but not worth reddening an
+# unrelated pull request.
+#
+# Scheduled for the same slot as the Dependabot updates in dependabot.yml, so
+# a finding lands next to the PR that would bump the offending package.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: uv audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10
+        with:
+          enable-cache: true
+
+      # --frozen audits the committed uv.lock exactly as it stands, without
+      # re-resolving: the question this job asks is "has the advisory database
+      # changed under our lockfile", not "is the lockfile current" (test.yml
+      # already checks that on every PR).
+      #
+      # `uv audit` is experimental as of uv 0.12; --preview-features silences
+      # the warning.  If this step starts failing on usage rather than
+      # findings, the interface has moved.
+      - name: Audit locked dependencies for known vulnerabilities
+        run: uv audit --frozen --preview-features audit-command
