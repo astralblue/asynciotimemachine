@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.0.1
+        uses: astral-sh/setup-uv@v10.3.2
         with:
           enable-cache: true
 
@@ -74,7 +74,7 @@ jobs:
       # The PyPA reference implementation, preferred over `uv publish` because
       # it generates PEP 740 attestations under Trusted Publishing.
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.14.2
+        uses: pypa/gh-action-pypi-publish@v1.14.3
 
   github-release:
     name: create GitHub release
